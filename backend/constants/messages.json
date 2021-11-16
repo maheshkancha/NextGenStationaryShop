@@ -1,0 +1,10 @@
+{
+  "SAVE_SUCCESS": "Saved the products details successfuly.",
+  "SAVE_FAILURE": "Error while saving the product details.",
+  "UPDATE_SUCCESS": "Updated the product details successfully.",
+  "UPDATE_FAILURE": "Error while updating the product details.",
+  "DELETE_SUCCESS": "Deleted the product successfully.",
+  "DELETE_FAILURE": "Error while deleting the product.",
+  "NO_SUCH_PRODUCT": "No such product exist.",
+  "NO_PRODUCT_AVAILABLE": "No products available. Please add some..."
+}

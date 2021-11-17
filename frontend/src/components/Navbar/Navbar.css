@@ -1,0 +1,32 @@
+nav {
+  width: 100vw;
+  height: 2rem;
+  background-color: dodgerblue;
+  display: flex;
+}
+
+ul {
+  padding: 0;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  list-style: none;
+}
+
+li {
+  margin-right: 2rem;
+}
+
+li:first-child {
+  margin-left: 1rem;
+}
+
+li > a {
+  text-decoration: none;
+  color: white;
+}
+
+.active-nav {
+  color: rgb(248, 181, 104);
+  text-decoration: underline;
+}

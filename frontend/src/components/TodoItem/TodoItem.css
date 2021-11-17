@@ -1,0 +1,15 @@
+.todo-item-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2rem;
+  padding: 0 1rem;
+  background-color: #000;
+  color: #fff;
+  margin-bottom: 1rem;
+  border-radius: 0.275rem;
+}
+
+.strikeoff {
+  text-decoration: line-through;
+}

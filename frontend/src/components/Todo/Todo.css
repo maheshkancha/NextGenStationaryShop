@@ -1,0 +1,31 @@
+.todo-container {
+  width: 25rem;
+  height: 100%;
+}
+
+.todo-add-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.75rem 0 1rem;
+}
+
+h1 {
+  margin: 0;
+}
+
+.todo-add-item > input {
+  height: 1.75rem;
+  border-radius: 0.25rem;
+  width: 20rem;
+  border-width: 0;
+}
+
+.todo-add-item > button {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 500;
+  border: 0px outset yellow;
+}

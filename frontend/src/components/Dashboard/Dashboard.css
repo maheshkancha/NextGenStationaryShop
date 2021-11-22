@@ -7,10 +7,9 @@
 
 .chart-section {
   width: 70%;
-  background-color: #577;
 }
 
 .todo-section {
   width: 30%;
-  background-color: #aaa;
+  padding-left: 1rem;
 }

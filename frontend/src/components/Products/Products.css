@@ -1,0 +1,41 @@
+.product-mngmt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-mngmt-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.product-mngmt-menu ul {
+  list-style: none;
+  display: flex;
+}
+
+.product-mngmt-menu ul li {
+  padding-left: 1rem;
+}
+
+.product-container {
+  display: flex;
+}
+
+.product-mngmt-section {
+  width: 40%;
+  padding-right: 3rem;
+}
+
+.product-mngmt-section-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.product-list-section {
+  width: 60%;
+}
+
+.add-product-wrapper {
+  padding: 2rem 2rem 0;
+}

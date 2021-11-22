@@ -1,0 +1,12 @@
+.chart-container {
+  display: flex;
+}
+
+.chart-container div {
+  width: 20rem;
+  height: 20rem;
+}
+
+.chart-container div:nth-child(1) {
+  margin-right: 5rem;
+}

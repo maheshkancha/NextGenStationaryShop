@@ -8,18 +8,18 @@ const Navbar = () => {
       <ul>
         <li>
           <NavLink
-            className={(navData) => (navData.isActive ? "active-nav" : "")}
             to="/"
+            className={(navData) => (navData.isActive ? "active-nav" : "")}
           >
             Home
           </NavLink>
         </li>
         <li>
           <NavLink
-            className={(navData) => (navData.isActive ? "active-nav" : "")}
             to="/products"
+            className={(navData) => (navData.isActive ? "active-nav" : "")}
           >
-            Manage Products
+            Manage Product
           </NavLink>
         </li>
       </ul>

@@ -1,7 +1,44 @@
 import React from "react";
-import { TodoItem } from "../index";
-import todoList from "./Todo.json";
+import TodoItem from "../TodoItem/TodoItem";
 import "./Todo.css";
+
+const todoList = [
+  {
+    id: 1,
+    description: "Due Rs. 250 on Ganesh for taking 2 sets xerox.",
+    isComplete: false,
+  },
+  {
+    id: 2,
+    description: "Create visual chart report for Sales",
+    isComplete: false,
+  },
+  {
+    id: 3,
+    description: "Create Dashboard page",
+    isComplete: true,
+  },
+  {
+    id: 4,
+    description: "Link frontend with backend",
+    isComplete: true,
+  },
+  {
+    id: 5,
+    description: "Add toast messages for notification",
+    isComplete: false,
+  },
+  {
+    id: 6,
+    description: "Generate PDF report",
+    isComplete: false,
+  },
+  {
+    id: 7,
+    description: "Work on Next Gen Stationary Shop App",
+    isComplete: false,
+  },
+];
 
 const Todo = () => {
   const [todoItems, addTodoItem] = React.useState(todoList);
@@ -36,7 +73,7 @@ const Todo = () => {
 
   return (
     <div className="todo-container">
-      <h1>Add Items</h1>
+      <h1>Add Checklist</h1>
       <hr />
       <div className="todo-add-item">
         <input type="text" placeholder="Add items..." ref={itemRef} />

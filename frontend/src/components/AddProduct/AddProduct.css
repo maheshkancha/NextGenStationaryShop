@@ -1,0 +1,8 @@
+.add-product-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.add-product-container div {
+  margin-bottom: 1rem;
+}

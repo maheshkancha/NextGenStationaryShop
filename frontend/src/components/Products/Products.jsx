@@ -26,7 +26,7 @@ const Products = () => {
   };
 
   const updateProductList = (product) => {
-    setProducts([...products, product]);
+    setProducts([...products, product.data]);
     setProductFlag(true);
     setTimeout(() => setProductFlag(false), 5000);
     setResponseMessage(product.message);

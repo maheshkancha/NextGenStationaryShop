@@ -25,14 +25,13 @@ const AddProduct = ({ updateProductList }) => {
     const {
       target: { name, value },
     } = e;
-    console.log(`${name} - ${value}`);
     setProduct({ ...product, [name]: value });
   };
 
   const saveProductDetail = () => {
     axios
       .post("http://localhost:3100/products", product)
-      .then((response) => response.data.data)
+      .then((response) => response.data)
       .then((data) => {
         updateProductList(data);
       });

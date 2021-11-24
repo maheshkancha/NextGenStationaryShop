@@ -1,20 +1,8 @@
 import React from "react";
 import ProductDetails from "../ProductDetails/ProductDetails";
 import "./ProductList.css";
-import axios from "axios";
 
-const ProductList = () => {
-  const [products, setProducts] = React.useState([]);
-
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:3100/products")
-      .then((response) => response.data)
-      .then((data) => {
-        setProducts(data.data);
-      });
-  }, []);
-
+const ProductList = ({ products }) => {
   return (
     <div className="product-list">
       {products &&

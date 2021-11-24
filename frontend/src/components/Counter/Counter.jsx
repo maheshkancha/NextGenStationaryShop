@@ -2,19 +2,19 @@ import React from "react";
 import { TextField, Button } from "@mui/material";
 import "./Counter.css";
 
-const Counter = () => {
-  const [count, setCounter] = React.useState(0);
+const Counter = ({ name, value, updateCounter }) => {
+  // const [count, setCounter] = React.useState(0);
 
   const decrement = () => {
-    setCounter((prevCount) => (prevCount === 0 ? 0 : Number(prevCount) - 1));
+    updateCounter({ target: { value: Number(value) - 1 } }, "quantity");
   };
 
   const increment = () => {
-    setCounter((prevCount) => Number(prevCount) + 1);
+    updateCounter({ target: { value: Number(value) + 1 } }, "quantity");
   };
 
-  const counterInputHandler = (value) => {
-    setCounter(value);
+  const counterInputHandler = (e) => {
+    updateCounter(e);
   };
 
   return (
@@ -23,13 +23,13 @@ const Counter = () => {
         -
       </Button>
       <TextField
-        id="counter"
-        label="Quantity"
+        name={name}
+        label={name.replace(/^\w{1}/g, (letter) => letter.toUpperCase())}
         type="number"
-        value={count}
+        value={value}
         variant="standard"
         className="counter-input"
-        onChange={(e) => counterInputHandler(e.target.value)}
+        onChange={(e) => counterInputHandler(e)}
       />
       <Button variant="contained" onClick={increment}>
         +

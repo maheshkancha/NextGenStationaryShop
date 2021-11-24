@@ -2,16 +2,38 @@ import React from "react";
 import AddProduct from "../AddProduct/AddProduct";
 // import AddItem from "../AddItems/AddItem";
 import ProductList from "../ProductList/ProductList";
-import { Button } from "@mui/material";
+import { Button, Snackbar, Alert } from "@mui/material";
+import axios from "axios";
 import "./Products.css";
 
 const Products = () => {
   const [showProduct, toggleShowProduct] = React.useState(true);
-  // const addItemHandler = (item) => {
-  //   console.log("Entered Value: ", item);
-  // };
+  const [products, setProducts] = React.useState();
+  const [productFlag, setProductFlag] = React.useState(false);
+  const [responseMessage, setResponseMessage] = React.useState("");
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3100/products")
+      .then((response) => response.data.data)
+      .then((data) => {
+        setProducts(data);
+      });
+  }, []);
+
   const toggleProductView = () => {
     toggleShowProduct(!showProduct);
+  };
+
+  const updateProductList = (product) => {
+    setProducts([...products, product]);
+    setProductFlag(true);
+    setTimeout(() => setProductFlag(false), 5000);
+    setResponseMessage(product.message);
+  };
+
+  const closeAlert = () => {
+    setProductFlag(false);
   };
 
   return (
@@ -35,18 +57,33 @@ const Products = () => {
       </div>
       <hr />
       <div className="product-container">
-        <section className="product-mngmt-section">
-          <div className="add-product-wrapper">
-            <div className="product-mngmt-section-title">Add New Product</div>
-            {showProduct && <AddProduct />}
-          </div>
-        </section>
         <section className="product-list-section">
           <h3>Products</h3>
-          <ProductList />
+          <ProductList products={products} />
         </section>
-        {/* <AddItem addItemHandler={addItemHandler} /> */}
+        <section className="product-mngmt-section">
+          {showProduct ? (
+            <div className="add-product-wrapper">
+              <div className="product-mngmt-section-title">Add New Product</div>
+              <AddProduct updateProductList={updateProductList} />
+            </div>
+          ) : (
+            <div className="no-selection">No Product Selected</div>
+          )}
+        </section>
       </div>
+      {productFlag && (
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+          open={productFlag}
+          autoHideDuration={6000}
+          onClose={closeAlert}
+        >
+          <Alert onClose={closeAlert} severity="success">
+            {responseMessage}
+          </Alert>
+        </Snackbar>
+      )}
     </div>
   );
 };

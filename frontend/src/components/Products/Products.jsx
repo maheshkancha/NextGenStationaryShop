@@ -1,16 +1,17 @@
 import React from "react";
 import AddProduct from "../AddProduct/AddProduct";
-// import AddItem from "../AddItems/AddItem";
 import ProductList from "../ProductList/ProductList";
 import { Button, Snackbar, Alert } from "@mui/material";
 import axios from "axios";
 import "./Products.css";
 
 const Products = () => {
-  const [showProduct, toggleShowProduct] = React.useState(true);
+  const [showProduct, toggleShowProduct] = React.useState(false);
   const [products, setProducts] = React.useState();
   const [productFlag, setProductFlag] = React.useState(false);
-  const [responseMessage, setResponseMessage] = React.useState("");
+  const [responseMessage, setResponseMessage] = React.useState(undefined);
+  const [productAction, setProductAction] = React.useState(undefined);
+  const [selectedProduct, setSelectedProduct] = React.useState(undefined);
 
   React.useEffect(() => {
     axios
@@ -23,6 +24,7 @@ const Products = () => {
 
   const toggleProductView = () => {
     toggleShowProduct(!showProduct);
+    setProductAction("addproduct");
   };
 
   const updateProductList = (product) => {
@@ -34,6 +36,23 @@ const Products = () => {
 
   const closeAlert = () => {
     setProductFlag(false);
+  };
+
+  const getSelectedProduct = (selectedProduct) => {
+    toggleShowProduct(true);
+    setSelectedProduct(selectedProduct);
+    setProductAction("productdetails");
+  };
+
+  const getProductActionTitle = () => {
+    return (
+      productAction &&
+      (productAction.includes("add")
+        ? "Add New Product"
+        : productAction.includes("details")
+        ? "Product Details"
+        : "")
+    );
   };
 
   return (
@@ -59,13 +78,26 @@ const Products = () => {
       <div className="product-container">
         <section className="product-list-section">
           <h3>Products</h3>
-          <ProductList products={products} />
+          <ProductList
+            products={products}
+            getSelectedProduct={getSelectedProduct}
+          />
         </section>
         <section className="product-mngmt-section">
-          {showProduct ? (
+          {productAction && showProduct ? (
             <div className="add-product-wrapper">
-              <div className="product-mngmt-section-title">Add New Product</div>
-              <AddProduct updateProductList={updateProductList} />
+              <div className="product-mngmt-section-title">
+                {getProductActionTitle()}
+              </div>
+              {productAction.includes("add") ? (
+                <AddProduct getNewProduct={updateProductList} />
+              ) : (
+                <AddProduct
+                  getNewProduct={updateProductList}
+                  selectedProduct={selectedProduct}
+                  actionType={productAction}
+                />
+              )}
             </div>
           ) : (
             <div className="no-selection">No Product Selected</div>

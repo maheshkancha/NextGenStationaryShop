@@ -1,14 +1,17 @@
 import React from "react";
 import "./ProductDetails.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrashAlt, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
-const ProductDetails = ({ product }) => {
+const ProductDetails = ({ product, getSelectedProduct }) => {
   const { product_name, category, quantity, price, sale_price } = product;
+
+  const selectedProduct = () => {
+    getSelectedProduct(product);
+  };
+
   return (
     <div>
       {product ? (
-        <div className="product-item-wrapper">
+        <div className="product-item-wrapper" onClick={selectedProduct}>
           <div>
             <span>{product_name}</span>
             <span>Product Name</span>
@@ -28,20 +31,6 @@ const ProductDetails = ({ product }) => {
           <div>
             <span>{sale_price}</span>
             <span>Sale Price</span>
-          </div>
-          <div>
-            <FontAwesomeIcon
-              icon={faPencilAlt}
-              title="Edit"
-              className="tooltip"
-            />
-          </div>
-          <div>
-            <FontAwesomeIcon
-              icon={faTrashAlt}
-              title="Delete"
-              className="tooltip"
-            />
           </div>
         </div>
       ) : (

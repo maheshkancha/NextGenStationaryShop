@@ -3,14 +3,12 @@ import { TextField, Button } from "@mui/material";
 import "./Counter.css";
 
 const Counter = ({ name, value, updateCounter }) => {
-  // const [count, setCounter] = React.useState(0);
-
   const decrement = () => {
-    updateCounter({ target: { value: Number(value) - 1 } }, "quantity");
+    updateCounter({ target: { value: Number(value) - 1, name: "quantity" } });
   };
 
   const increment = () => {
-    updateCounter({ target: { value: Number(value) + 1 } }, "quantity");
+    updateCounter({ target: { value: Number(value) + 1, name: "quantity" } });
   };
 
   const counterInputHandler = (e) => {

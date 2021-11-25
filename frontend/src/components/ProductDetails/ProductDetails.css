@@ -7,6 +7,7 @@
   border-radius: 0.25rem;
   border: 1px solid #777;
   box-shadow: 3px 3px 2px rgba(1, 1, 1, 1);
+  cursor: pointer;
 }
 
 .product-item-wrapper div {
@@ -19,14 +20,4 @@
 .product-item-wrapper div span:nth-child(even) {
   font-size: 0.75rem;
   font-weight: 600;
-}
-
-.tooltip {
-  color: dodgerblue;
-  cursor: pointer;
-}
-
-.tooltip > title {
-  background-color: #000;
-  color: #fff;
 }

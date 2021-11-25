@@ -10,8 +10,14 @@ import {
 } from "@mui/material";
 import "./AddProduct.css";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrashAlt,
+  faPencilAlt,
+  faSave,
+} from "@fortawesome/free-solid-svg-icons";
 
-const AddProduct = ({ updateProductList }) => {
+const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
   const initialState = {
     product_name: "",
     category: "",
@@ -19,7 +25,15 @@ const AddProduct = ({ updateProductList }) => {
     price: 0,
     sale_price: 0,
   };
+
   const [product, setProduct] = React.useState(initialState);
+  // const [showDeleteModel, setShowDeleteModel] = React.useState(false);
+
+  React.useEffect(() => {
+    if (selectedProduct) {
+      setProduct(selectedProduct);
+    }
+  }, [selectedProduct]);
 
   const setProductDetail = (e) => {
     const {
@@ -33,10 +47,12 @@ const AddProduct = ({ updateProductList }) => {
       .post("http://localhost:3100/products", product)
       .then((response) => response.data)
       .then((data) => {
-        updateProductList(data);
+        getNewProduct(data);
       });
 
-    setProduct(initialState);
+    if (!actionType.includes("detail")) {
+      setProduct(initialState);
+    }
   };
 
   return (
@@ -45,7 +61,7 @@ const AddProduct = ({ updateProductList }) => {
         name="product_name"
         label="Product Name"
         variant="standard"
-        value={product.productName}
+        value={product.product_name}
         onChange={(e) => setProductDetail(e)}
       />
 
@@ -85,13 +101,33 @@ const AddProduct = ({ updateProductList }) => {
         label="Sale Price"
         type="number"
         variant="standard"
-        value={product.salePrice}
+        value={product.sale_price}
         onChange={(e) => setProductDetail(e)}
       />
 
-      <Button variant="contained" onClick={saveProductDetail}>
-        Add
-      </Button>
+      <div className="button-panel">
+        {actionType && actionType.includes("detail") ? (
+          <>
+            <Button variant="contained" onClick={saveProductDetail}>
+              <FontAwesomeIcon icon={faPencilAlt} title="Edit" />
+              Update
+            </Button>
+            <Button variant="contained" onClick={() => {}}>
+              <FontAwesomeIcon icon={faTrashAlt} title="Delete" />
+              Delete
+            </Button>
+          </>
+        ) : (
+          <Button
+            variant="contained"
+            onClick={saveProductDetail}
+            style={{ width: "100%" }}
+          >
+            <FontAwesomeIcon icon={faSave} title="Save" />
+            Add
+          </Button>
+        )}
+      </div>
     </div>
   );
 };

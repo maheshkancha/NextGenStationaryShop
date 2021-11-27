@@ -28,7 +28,15 @@ const Products = () => {
   };
 
   const updateProductList = (product) => {
-    setProducts([...products, product.data]);
+    console.log("Product: ", product);
+    if (product.data) {
+      setProducts([...products, product.data]);
+    } else {
+      const productAfterDeletion = products.filter(
+        (product) => product._id !== selectedProduct._id
+      );
+      setProducts(productAfterDeletion);
+    }
     setProductFlag(true);
     setTimeout(() => setProductFlag(false), 5000);
     setResponseMessage(product.message);

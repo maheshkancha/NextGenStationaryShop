@@ -7,6 +7,12 @@ import {
   Select,
   MenuItem,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide,
 } from "@mui/material";
 import "./AddProduct.css";
 import axios from "axios";
@@ -15,7 +21,13 @@ import {
   faTrashAlt,
   faPencilAlt,
   faSave,
+  faCheck,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
   const initialState = {
@@ -27,7 +39,8 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
   };
 
   const [product, setProduct] = React.useState(initialState);
-  // const [showDeleteModel, setShowDeleteModel] = React.useState(false);
+  const [showDeleteModel, setShowDeleteModel] = React.useState(false);
+  const [isDirty, setDirty] = React.useState(false);
 
   React.useEffect(() => {
     if (selectedProduct) {
@@ -39,6 +52,7 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
     const {
       target: { name, value },
     } = e;
+    setDirty(true);
     setProduct({ ...product, [name]: value });
   };
 
@@ -53,6 +67,19 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
     if (!actionType.includes("detail")) {
       setProduct(initialState);
     }
+  };
+
+  const shouldOpenDeleteModel = (flag) => {
+    setShowDeleteModel(flag);
+  };
+
+  const handleDelete = (action) => {
+    if (action) {
+      axios
+        .delete(`http://localhost:3100/products/${product._id}`)
+        .then((response) => getNewProduct(response.data));
+    }
+    setShowDeleteModel(false);
   };
 
   return (
@@ -108,11 +135,19 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
       <div className="button-panel">
         {actionType && actionType.includes("detail") ? (
           <>
-            <Button variant="contained" onClick={saveProductDetail}>
+            <Button
+              variant="contained"
+              disabled={!isDirty}
+              onClick={saveProductDetail}
+            >
               <FontAwesomeIcon icon={faPencilAlt} title="Edit" />
               Update
             </Button>
-            <Button variant="contained" onClick={() => {}}>
+            <Button
+              variant="contained"
+              color="error"
+              onClick={() => shouldOpenDeleteModel(true)}
+            >
               <FontAwesomeIcon icon={faTrashAlt} title="Delete" />
               Delete
             </Button>
@@ -128,6 +163,32 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
           </Button>
         )}
       </div>
+
+      {showDeleteModel && (
+        <Dialog
+          open={showDeleteModel}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={() => shouldOpenDeleteModel(false)}
+          aria-describedby="delete-product"
+        >
+          <DialogTitle>Delete</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="delete-product">
+              Are you sure you want to delete product -{" "}
+              <strong>{selectedProduct.product_name}</strong>?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions style={{ margin: "0 1rem 0.5rem 0" }}>
+            <Button variant="contained" onClick={() => handleDelete(false)}>
+              <FontAwesomeIcon icon={faTimes} title="No" />
+            </Button>
+            <Button variant="contained" onClick={() => handleDelete(true)}>
+              <FontAwesomeIcon icon={faCheck} title="Yes" />
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </div>
   );
 };

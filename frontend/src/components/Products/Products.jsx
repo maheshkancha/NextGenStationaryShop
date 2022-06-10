@@ -10,7 +10,7 @@ const Products = () => {
   const [products, setProducts] = React.useState();
   const [productFlag, setProductFlag] = React.useState(false);
   const [responseMessage, setResponseMessage] = React.useState(undefined);
-  const [productAction, setProductAction] = React.useState(undefined);
+  const [productAction, setProductAction] = React.useState("addproduct");
   const [selectedProduct, setSelectedProduct] = React.useState(undefined);
 
   React.useEffect(() => {
@@ -27,11 +27,28 @@ const Products = () => {
     setProductAction("addproduct");
   };
 
-  const updateProductList = (product) => {
+  const updateProductList = (product, action) => {
     console.log("Product: ", product);
     if (product.data) {
-      setProducts([...products, product.data]);
+      if (action === "update") {
+        const productsClone = [...products];
+        const updatedProductIndex = productsClone.findIndex(
+          (item) => String(item._id) === String(product.data._id)
+        );
+        console.log("Product Index:", updatedProductIndex);
+        productsClone[updatedProductIndex] = {
+          ...productsClone[updatedProductIndex],
+          ...product.data,
+        };
+
+        console.log("Updated Data... ", productsClone[updatedProductIndex]);
+        setProducts(productsClone);
+      } else {
+        console.log("Save...");
+        setProducts([...products, product.data]);
+      }
     } else {
+      console.log("else part...");
       const productAfterDeletion = products.filter(
         (product) => product._id !== selectedProduct._id
       );

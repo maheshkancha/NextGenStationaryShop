@@ -56,12 +56,12 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
     setProduct({ ...product, [name]: value });
   };
 
-  const saveProductDetail = () => {
+  const saveProductDetail = (action) => {
     axios
       .post("http://localhost:3100/products", product)
       .then((response) => response.data)
       .then((data) => {
-        getNewProduct(data);
+        getNewProduct(data, action);
       });
 
     if (!actionType.includes("detail")) {
@@ -77,7 +77,7 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
     if (action) {
       axios
         .delete(`http://localhost:3100/products/${product._id}`)
-        .then((response) => getNewProduct(response.data));
+        .then((response) => getNewProduct(response.data, "delete"));
     }
     setShowDeleteModel(false);
   };
@@ -138,7 +138,7 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
             <Button
               variant="contained"
               disabled={!isDirty}
-              onClick={saveProductDetail}
+              onClick={() => saveProductDetail("update")}
             >
               <FontAwesomeIcon icon={faPencilAlt} title="Edit" />
               Update
@@ -155,7 +155,7 @@ const AddProduct = ({ getNewProduct, selectedProduct, actionType }) => {
         ) : (
           <Button
             variant="contained"
-            onClick={saveProductDetail}
+            onClick={() => saveProductDetail("save")}
             style={{ width: "100%" }}
           >
             <FontAwesomeIcon icon={faSave} title="Save" />
